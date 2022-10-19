@@ -6,8 +6,13 @@ ALTER TABLE animals ADD species CHAR(50);
 --
 CREATE TABLE owners(id INT GENERATED ALWAYS AS IDENTITY,full_name VARCHAR(255),age INT,PRIMARY KEY(id));
 CREATE TABLE species(id INT GENERATED ALWAYS AS IDENTITY,name VARCHAR(25),PRIMARY KEY(id));
---to do
+--
 ALTER TABLE animals ALTER column id Set GENERATED ALWAYS;
 ALTER TABLE animals DROP COLUMN species;
 ALTER TABLE animals ADD species_id INT REFERENCES species(id);
 ALTER TABLE animals ADD owner_id INT REFERENCES owners(id);
+
+--
+CREATE TABLE vets( id INT GENERATED ALWAYS AS IDENTITY, name VARCHAR(50), age INT, date_of_graduation DATE, PRIMARY KEY (id)); 
+CREATE TABLE specializations(species_id INT,vets_id INT,PRIMARY KEY(species_id,vets_id),FOREIGN KEY (species_id) REFERENCES species (id),FOREIGN KEY (vetss_id) REFERENCES vets (id));
+CREATE TABLE visits(animal_id INT,vets_id INT,date_of_visit DATE,PRIMARY KEY(animal_id,vets_id,date_of_visit),FOREIGN KEY (animal_id) REFERENCES animals(id),FOREIGN KEY (vets_id) REFERENCES vets(id));
