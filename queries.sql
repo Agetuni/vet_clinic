@@ -65,3 +65,8 @@ SELECT a.name AS First_Visit, s.name as Species, a.date_of_birth, vt.date_of_vis
 SELECT a.name AS Animal, a.date_of_birth, a.weight_kg, v.name AS Vet_Name, v.age AS vet_age,v.date_of_graduation, vt.date_of_visit FROM animals a JOIN visits vt ON a.id = vt.animal_id JOIN vets v ON vt.vets_id = v.id ORDER BY vt.date_of_visit DESC LIMIT 1; 
 SELECT COUNT(unspecialized_visit.name) AS unspecialized_visit FROM vets v JOIN visits vt ON vt.vets_id = v.id JOIN animals ON vt.animal_id = animals.id JOIN species sp ON sp.id = animals.species_id JOIN specializations s ON s.vets_id = v.id JOIN species AS unspecialized_visit ON unspecialized_visit.id = s.vets_id WHERE sp.id != unspecialized_visit.id; 
 SELECT sp.name AS species FROM vets v JOIN visits vt ON v.id = vt.vets_id JOIN animals a ON vt.animal_id = a.id JOIN species sp ON sp.id = a.species_id WHERE v.name = 'Maisy Smith' GROUP BY species LIMIT 1; 
+
+--Explain analyze Queries
+explain analyze SELECT COUNT(*) FROM visits where animals_id = 4; (1.307s)
+explain analyze SELECT * FROM visits where vets_id = 2;  (2.49s)
+explain analyze SELECT * FROM owners where email = 'owner_18327@mail.com';  (1.126s)
