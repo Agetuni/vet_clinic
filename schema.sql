@@ -16,3 +16,12 @@ ALTER TABLE animals ADD owner_id INT REFERENCES owners(id);
 CREATE TABLE vets( id INT GENERATED ALWAYS AS IDENTITY, name VARCHAR(50), age INT, date_of_graduation DATE, PRIMARY KEY (id)); 
 CREATE TABLE specializations(species_id INT,vets_id INT,PRIMARY KEY(species_id,vets_id),FOREIGN KEY (species_id) REFERENCES species (id),FOREIGN KEY (vetss_id) REFERENCES vets (id));
 CREATE TABLE visits(animal_id INT,vets_id INT,date_of_visit DATE,PRIMARY KEY(animal_id,vets_id,date_of_visit),FOREIGN KEY (animal_id) REFERENCES animals(id),FOREIGN KEY (vets_id) REFERENCES vets(id));
+
+
+-- Add an email column to your owners table
+ALTER TABLE owners ADD COLUMN email VARCHAR(120);
+
+-- Adding indexes to improve the response time
+CREATE INDEX animals_desc ON visits(animal_id DESC);
+CREATE INDEX vets_id_desc ON visits(vets_id DESC);
+CREATE INDEX email_desc ON owners(email DESC);
